@@ -1,9 +1,11 @@
 const express = require("express");
 const server = express();
+const { connect } = require("./db");
 
-server.get("/test", (req, res) => {
-  return res.json({ message: "Server working" });
-});
+connect();
+
+// GET /api/v1/portfolios
+server.use("/api/v1/portfolios", require("./routes/portfolios"));
 
 const PORT = process.env.PORT || 3001;
 
