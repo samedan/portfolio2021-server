@@ -19,7 +19,10 @@
   },
   "homepage": "https://github.com/samedan/portfolio2021-server#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "jwks-rsa": "^1.12.2",
     "mongoose": "^5.11.10"
   },
   "devDependencies": {
