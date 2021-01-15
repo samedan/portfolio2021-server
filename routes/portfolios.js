@@ -3,6 +3,7 @@ const {
   getPortfolios,
   getPortfolioById,
   createPortfolio,
+  updatePortfolio,
 } = require("../controllers/portfolios");
 const { checkJwt } = require("../controllers/auth");
 
@@ -11,12 +12,12 @@ const router = express.Router();
 // GET api/v1/portfolios
 router.get(
   "",
-  (req, res, next) => {
-    if (err) {
-      res.status(422).send("Error");
-    }
-    next();
-  },
+  // (req, res, next) => {
+  //   if (err) {
+  //     res.status(422).send("Error");
+  //   }
+  //   next();
+  // },
   getPortfolios
 );
 
@@ -25,5 +26,8 @@ router.get("/:id", getPortfolioById);
 
 // POST api/v1/portfolios
 router.post("/", checkJwt, createPortfolio);
+
+// PATCH api/v1/portfolios/id
+router.patch("/:id", checkJwt, updatePortfolio);
 
 module.exports = router;
