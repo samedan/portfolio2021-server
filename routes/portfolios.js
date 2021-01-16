@@ -4,6 +4,7 @@ const {
   getPortfolioById,
   createPortfolio,
   updatePortfolio,
+  deletePortfolio,
 } = require("../controllers/portfolios");
 const { checkJwt } = require("../controllers/auth");
 
@@ -29,5 +30,8 @@ router.post("/", checkJwt, createPortfolio);
 
 // PATCH api/v1/portfolios/id
 router.patch("/:id", checkJwt, updatePortfolio);
+
+// DELETE api/v1/portfolios/id
+router.delete("/:id", checkJwt, deletePortfolio);
 
 module.exports = router;
