@@ -27,6 +27,30 @@ exports.createBlog = async (req, res) => {
     const createdBlog = await blog.save();
     return res.json(createdBlog);
   } catch (e) {
-    return res.status(422).send(e);
+    return res.status(422).send(e.message);
   }
+};
+
+exports.updateBlog = async (req, res) => {
+  const {
+    body,
+    params: { id },
+  } = req;
+  Blog.findById(id, async (err, blog) => {
+    if (err) {
+      return res.status(422).send(err.message);
+    }
+
+    // TODO check if user is publishing blog,
+    // create slug
+
+    blog.set(body); // interbnal instance
+    blog.updatedAt = new Date();
+    try {
+      const updatedBlog = await blog.save();
+      return res.json(updatedBlog);
+    } catch (error) {
+      return res.status(422).send(error.message);
+    }
+  });
 };

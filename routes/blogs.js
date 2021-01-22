@@ -4,6 +4,7 @@ const {
   getBlogById,
   getBlogBySlug,
   createBlog,
+  updateBlog,
 } = require("../controllers/blogs");
 const { checkJwt, checkRole } = require("../controllers/auth");
 
@@ -15,5 +16,6 @@ router.get("/:id", getBlogById);
 router.get("/s/:slug", getBlogBySlug);
 
 router.post("", checkJwt, checkRole("admin"), createBlog);
+router.patch("/:id", checkJwt, checkRole("admin"), updateBlog);
 
 module.exports = router;
