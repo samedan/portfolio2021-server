@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const slugify = require("slugify");
 const Blog = mongoose.model("Blog");
 
 exports.getBlogs = async (req, res) => {
@@ -49,6 +49,15 @@ exports.updateBlog = async (req, res) => {
 
     // TODO check if user is publishing blog,
     // create slug
+    if (body.status && body.status === "published" && !blog.slug) {
+      blog.slug = slugify(blog.title, {
+        replacement: "-", // replace spaces with replacement character, defaults to `-`
+        remove: undefined, // remove characters that match regex, defaults to `undefined`
+        lower: true, // convert to lower case, defaults to `false`
+        strict: false, // strip special characters except replacement, defaults to `false`
+        locale: "vi", // language code of the locale to use
+      });
+    }
 
     blog.set(body); // interbnal instance
     blog.updatedAt = new Date();
