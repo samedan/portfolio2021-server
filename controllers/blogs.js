@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
+const uniqueSlug = require("unique-slug");
 const Blog = mongoose.model("Blog");
 
 exports.getBlogs = async (req, res) => {
@@ -37,6 +38,22 @@ exports.createBlog = async (req, res) => {
   }
 };
 
+const _saveBlog = async (blog) => {
+  try {
+    const createdBlog = await blog.save();
+    return createdBlog;
+  } catch (e) {
+    // verify TYPE of error (slug)
+    if (e.code === 11000 && e.keyPattern && e.keyPattern.slug) {
+      // add to the slug
+      blog.slug += `-${uniqueSlug()}`;
+      return _saveBlog(blog);
+    } else {
+      throw e;
+    }
+  }
+};
+
 exports.updateBlog = async (req, res) => {
   const {
     body,
@@ -62,7 +79,7 @@ exports.updateBlog = async (req, res) => {
     blog.set(body); // interbnal instance
     blog.updatedAt = new Date();
     try {
-      const updatedBlog = await blog.save();
+      const updatedBlog = await _saveBlog(blog);
       return res.json(updatedBlog);
     } catch (error) {
       return res.status(422).send(error.message);
