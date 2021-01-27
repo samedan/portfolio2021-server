@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const slugify = require("slugify");
 const uniqueSlug = require("unique-slug");
 const Blog = mongoose.model("Blog");
+const { getAccessToken, getAuth0User } = require("./auth");
 
 exports.getBlogs = async (req, res) => {
   const blogs = await Blog.find({ status: "published" })
@@ -25,7 +26,10 @@ exports.getBlogById = async (req, res) => {
 };
 exports.getBlogBySlug = async (req, res) => {
   const blog = await Blog.findOne({ slug: req.params.slug });
-  return res.json(blog);
+  const { access_token } = await getAccessToken();
+  const user = await getAuth0User(access_token)(blog.userId);
+
+  return res.json({ blog, user });
 };
 
 exports.createBlog = async (req, res) => {
