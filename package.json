@@ -21,10 +21,13 @@
   "homepage": "https://github.com/samedan/portfolio2021-server#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cloudinary": "^1.24.0",
+    "datauri": "^3.0.0",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "jwks-rsa": "^1.12.2",
     "mongoose": "^5.11.10",
+    "multer": "^1.4.2",
     "request": "^2.88.2",
     "slugify": "^1.4.6",
     "unique-slug": "^2.0.2"

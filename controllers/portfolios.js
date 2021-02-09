@@ -20,11 +20,11 @@ exports.getPortfolioById = async (req, res) => {
 
 exports.createPortfolio = async (req, res) => {
   const portfolioData = req.body;
-  const userId = req.user.sub; // sub has User in Auth0
+  // const userId = req.user.sub; // sub has User in Auth0
 
   // instance on server
   const portfolio = new Portfolio(portfolioData);
-  portfolio.userId = userId;
+  // portfolio.userId = userId;
   try {
     const newPortfolio = await portfolio.save();
     return res.json(newPortfolio);

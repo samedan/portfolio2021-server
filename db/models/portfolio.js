@@ -9,6 +9,7 @@ const portfolioSchema = new Schema({
   location: { type: String, required: true },
   jobTitle: { type: String, required: true },
   description: { type: String, required: true },
+  images: { type: Array, default: [] },
   startDate: { type: Date, required: true },
   endDate: { type: Date },
   userId: { type: String, require: true },
